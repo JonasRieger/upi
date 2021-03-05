@@ -13,6 +13,8 @@ setwd(folder)
 for(type in c("_wirtschaft_unsicher", "_wirtschaft", "")){
   obj = readRDS(file.path("..", paste0("obj_updated", type, ".rds")))
   obj = filterDate(obj, e.date = as.Date(folder))
+  obj$text = lapply(obj$text, function(x) gsub("\u00AD", "", x))
+  # delete those weird SOFT HYPHEN
   obj = cleanTexts(obj, sw = sw)
   saveRDS(obj, file.path("..", paste0("clean_updated", type, ".rds")))
   wl = makeWordlist(obj$text)
