@@ -2,7 +2,7 @@
 ### Our Uncertainty Perception Indicator (UPI) in Q4 2020: introducing RollingLDA, a New Method for the Measurement of Evolving Economic Narratives
 The repository provides selected data and scripts related to the working paper
 
-* Müller, H., Rieger. J. & Hornig, N. (2021). “We’re rolling".  Our Uncertainty Perception Indicator (UPI) in Q4 2020: introducing RollingLDA, a new Method for the Measurement of Evolving Economic Narratives. [*DoCMA Working Paper #6*](https://docma.tu-dortmund.de/working-papers/).
+* Müller, H., Rieger. J. & Hornig, N. (2021). “We’re rolling".  Our Uncertainty Perception Indicator (UPI) in Q4 2020: introducing RollingLDA, a new Method for the Measurement of Evolving Economic Narratives. [*DoCMA Working Paper #6*](http://dx.doi.org/10.17877/DE290R-21974).
 
 For bug reports, comments and questions please use the [issue tracker](https://github.com/JonasRieger/upi/issues).
 
