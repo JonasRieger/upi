@@ -3,33 +3,32 @@ library(ldaPrototype)
 library(lubridate)
 library(ggplot2)
 library(GGally)
+library(ggthemes)
 
 folder = readLines("folder.txt")
-tmp = readRDS("obj_updated.rds")$meta
-obj_all = textmeta(meta = tmp[tmp$date <= folder,])
-tmp = readRDS("obj_updated_wirtschaft.rds")$meta
-obj_wirtschaft = textmeta(meta = tmp[tmp$date <= folder,])
+obj_all = filterDate(readRDS("clean_updated.rds"), e.date = folder)
+obj_wirtschaft = filterDate(readRDS("clean_updated_wirtschaft.rds"), e.date = folder)
 obj = filterDate(readRDS("obj_updated_wirtschaft_unsicher.rds"), e.date = folder)
 setwd(folder)
 dir.create("analysis")
 pdf(file.path("analysis", "corpus.pdf"), width = 10, height = 7)
 rel_wirtschaft = plotScot(obj_all, obj_wirtschaft$meta$id, rel = TRUE,
-                          main = "Share of \"wirtschaft\"-corpus on entire corpus",
-                          ylim = c(0, 0.5))
+                          main = "Share of \"wirtschaft\"-corpus on entire corpus (words)",
+                          ylim = c(0, 0.5), type = "words")
 rel_wirtschaftq = plotScot(obj_all, obj_wirtschaft$meta$id, rel = TRUE, unit = "quarter",
-                           main = "Share of \"wirtschaft\"-corpus on entire corpus",
-                           ylim = c(0, 0.5))
+                           main = "Share of \"wirtschaft\"-corpus on entire corpus (words)",
+                           ylim = c(0, 0.5), type = "words")
 rel_unsicher = plotScot(obj_wirtschaft, obj$meta$id, rel = TRUE,
-                        main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on \"wirtschaft\"-corpus",
-                        ylim = c(0, 0.15))
+                        main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on \"wirtschaft\"-corpus (words)",
+                        ylim = c(0, 0.15), type = "words")
 rel_unsicherq = plotScot(obj_wirtschaft, obj$meta$id, rel = TRUE, unit = "quarter",
-                         main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on \"wirtschaft\"-corpus",
-                         ylim = c(0, 0.15))
+                         main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on \"wirtschaft\"-corpus (words)",
+                         ylim = c(0, 0.15), type = "words")
 rel_all = plotScot(obj_all, obj$meta$id, rel = TRUE,
-                   main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on entire corpus",
-                   ylim = c(0, 0.04))
+                   main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on entire corpus (words)",
+                   ylim = c(0, 0.04), type = "words")
 plotScot(obj_all, obj$meta$id, rel = TRUE, unit = "quarter",
-         main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on entire corpus",
+         main = "Share of \"wirtschaft\"&\"unsicher\"-corpus on entire corpus (words)",
          ylim = c(0, 0.04))
 abs = plot(obj, main = "Number of articles of \"wirtschaft\"&\"unsicher\"-corpus")
 plot(obj, main = "Number of articles of \"wirtschaft\"&\"unsicher\"-corpus", unit = "quarter")
@@ -180,7 +179,8 @@ sims = lapply(1:K, function(k){
 })
 
 valq = sapply(sims, function(x) c(NA, x$sims[cbind(2:nquarter,2:nquarter-1)]))
-
+val_first = sapply(sims, function(x) x$sims[,1])
+val_last = sapply(sims, function(x) x$sims[80,])
 
 ### monthly topic sims
 months = lubridate::floor_date(obj$meta$date[match(names(docs), obj$meta$id)], "month")
@@ -208,7 +208,7 @@ sims = lapply(1:K, function(k){
 
 valm = sapply(sims, function(x) c(NA, x$sims[cbind(2:nmonths,2:nmonths-1)]))
 
-labels = c("Topic 1: Human Resources",
+labels = c("Topic 1: Corporate Culture",
            "Topic 2: EU Conflicts",
            "Topic 3: Energy & Climate Change Mitigation",
            "Topic 4: Companies Markets",
@@ -225,10 +225,20 @@ labels = c("Topic 1: Human Resources",
 
 xmin = min(xmonths)
 
-pdf(file.path("analysis", "topics_cosine.pdf"), width = 7, height = 10)
+pdf(file.path("analysis", "topics_cosine_excel3.pdf"), width = 8, height = 10)
 ggmatrix(lapply(1:14, function(i){
   ggplot() + geom_line(aes(x = xmonths, y = valm[,i]), col = "darkgrey") + ylim(c(0,1)) +
+    geom_line(aes(x = xquarter, y = val_first[,i], col = "green")) +
+    geom_line(aes(x = xquarter, y = val_last[,i], col = "red")) +
     geom_line(aes(x = xquarter, y = valq[,i])) +
-    annotate("text", x = xmin, y = 0.05, label = labels[i], hjust = 0, vjust = 0)
+    annotate("text", x = xmin, y = 0.05, label = labels[i], hjust = 0, vjust = 0) +
+    theme_excel_new() + scale_colour_excel_new() +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      axis.ticks.x = element_line(),
+      axis.text.x = element_text(angle = 90, vjust = 0.5)
+    ) + scale_x_date(date_breaks = "year", date_labels = "%m.%d.%y")
+  
 }), nrow = 7, ncol = 2, ylab = "Cosine Similarity")
 dev.off()
