@@ -33,6 +33,9 @@ obj$text = removeHTML(obj$text, hex = FALSE, symbols = TRUE)
 obj$text = removeUmlauts(obj$text)
 obj$text = removeXML(obj$text)
 obj$text = lapply(obj$text, function(x) gsub("&[^;]*;", " ", x))
+obj$text = lapply(obj$text, function(x) gsub("\u00AD", "", x))
+obj$text = lapply(obj$text, function(x) gsub("\u00A0", "", x))
+
 
 obj$meta = obj$meta[order(obj$meta$date),]
 obj$text = obj$text[match(obj$meta$id, names(obj$text))]

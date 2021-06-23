@@ -4,6 +4,7 @@ library(tmT)
 library(tosca)
 
 rootpath = "//media/TextMining/DoCMA/data"
+setwd(rootpath)
 
 objlist = list()
 files_welt = setdiff(list.files(recursive = TRUE, path = file.path("Welt", "data")),
@@ -20,8 +21,6 @@ if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
   objlist[[1]] = obj
   
   ## SZ
-  files_sz = setdiff(list.files(path = file.path("Sueddeutsche", "ftp-SZ")),
-                     readLines(file.path("Working_Paper_Uncertainty", "sz.txt")))
   setwd(file.path(rootpath, "Sueddeutsche", "ftp-SZ"))
   obj = readSZ(file = files_sz)
   obj$text = lapply(obj$text, function(x) paste(unlist(x), collapse = " "))
@@ -44,11 +43,8 @@ if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
   obj$text = removeUmlauts(obj$text)
   obj$text = removeXML(obj$text)
   obj$text = lapply(obj$text, function(x) gsub("&[^;]*;", " ", x))
-  
-  obj$meta = obj$meta[order(obj$meta$date),]
-  obj$text = obj$text[match(obj$meta$id, names(obj$text))]
-  obj$text = obj$text[!duplicated(obj$text)]
-  obj$meta = obj$meta[obj$meta$id %in% names(obj$text),]
+  obj$text = lapply(obj$text, function(x) gsub("\u00AD", "", x))
+  obj$text = lapply(obj$text, function(x) gsub("\u00A0", "", x))
   
   ## save new objects
   setwd(file.path(rootpath, "Working_Paper_Uncertainty"))
@@ -84,5 +80,5 @@ if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
   
   difftime(Sys.time(), starttime, units = "hours")
 }else{
-  message("There is no new data!")
+  message("Keine neuen Daten!")
 }

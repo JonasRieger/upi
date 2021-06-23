@@ -211,22 +211,35 @@ valm = sapply(sims, function(x) c(NA, x$sims[cbind(2:nmonths,2:nmonths-1)]))
 labels = c("Topic 1: Corporate Culture",
            "Topic 2: EU Conflicts",
            "Topic 3: Energy & Climate Change Mitigation",
-           "Topic 4: Companies Markets",
+           "Topic 4: Companies & Markets",
            "Topic 5: Geopolitics",
            "Topic 6: Society",
            "Topic 7: Financial Markets I",
            "Topic 8: German Politics I",
            "Topic 9: Miscellaneous",
            "Topic 10: Financial Markets II",
-           "Topic 11: Leisure & Hospatility",
+           "Topic 11: Leisure & Hospitality",
            "Topic 12: Central banks",
            "Topic 13: German Economy",
            "Topic 14: German Politics II")
 
 xmin = min(xmonths)
 
-pdf(file.path("analysis", "topics_cosine_excel3.pdf"), width = 8, height = 10)
-ggmatrix(lapply(1:14, function(i){
+plot2 = ggmatrix(lapply(1:14, function(i){
+  ggplot() + geom_line(aes(x = xmonths, y = valm[,i]), col = "darkgrey") + ylim(c(0,1)) +
+    geom_line(aes(x = xquarter, y = val_first[,i], col = "green")) +
+    geom_line(aes(x = xquarter, y = val_last[,i], col = "red")) +
+    geom_line(aes(x = xquarter, y = valq[,i])) +
+    annotate("text", x = xmin, y = 0.05, label = labels[i], hjust = 0, vjust = 0) +
+    theme_excel_new() + scale_colour_excel_new() +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+    )
+  
+}), nrow = 7, ncol = 2, ylab = "Cosine Similarity")
+
+plot3 = ggmatrix(lapply(1:14, function(i){
   ggplot() + geom_line(aes(x = xmonths, y = valm[,i]), col = "darkgrey") + ylim(c(0,1)) +
     geom_line(aes(x = xquarter, y = val_first[,i], col = "green")) +
     geom_line(aes(x = xquarter, y = val_last[,i], col = "red")) +
@@ -241,4 +254,19 @@ ggmatrix(lapply(1:14, function(i){
     ) + scale_x_date(date_breaks = "year", date_labels = "%m.%d.%y")
   
 }), nrow = 7, ncol = 2, ylab = "Cosine Similarity")
+
+pdf(file.path("analysis", "topics_cosine_excel2.pdf"), width = 8, height = 10)
+print(plot2)
+dev.off()
+
+tiff(file.path("analysis", "topics_cosine_excel2.tiff"), width = 1600, height = 2000)
+print(plot2)
+dev.off()
+
+pdf(file.path("analysis", "topics_cosine_excel3.pdf"), width = 8, height = 10)
+print(plot3)
+dev.off()
+
+tiff(file.path("analysis", "topics_cosine_excel3.tiff"), width = 1600, height = 2000)
+print(plot3)
 dev.off()
