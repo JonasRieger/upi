@@ -23,10 +23,11 @@ cuts = c(as.Date(folder) + 1 - months(3), as.Date(folder) + 1)
 cache = as.Date(folder) + 1 - years(1)
 
 prev_q = as.Date(folder) + 1 - months(3) - 1
-max_voc = max(as.numeric(str_extract(list.files(file.path(prev_q, "lda"), "vocab"), "[0-9]+")))
+#max_voc = max(as.numeric(str_extract(list.files(file.path(prev_q, "lda"), "vocab"), "[0-9]+")))
 
 docs_all = readRDS(file.path(prev_q, "lda", "docsall.rds"))
-vocab = readRDS(file.path(prev_q, "lda", paste0("vocab", max_voc, ".rds")))
+#vocab = readRDS(file.path(prev_q, "lda", paste0("vocab", max_voc, ".rds")))
+vocab = readRDS(file.path(prev_q, "lda", "vocab.rds"))
 lda = readRDS(file.path(prev_q, "lda", "ldachunked.rds"))
 assignments = getAssignments(lda)
 

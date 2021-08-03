@@ -259,14 +259,18 @@ pdf(file.path("analysis", "topics_cosine_excel2.pdf"), width = 8, height = 10)
 print(plot2)
 dev.off()
 
-tiff(file.path("analysis", "topics_cosine_excel2.tiff"), width = 550, height = 688)
-print(plot2, type = "cairo")
+tiff(file.path("analysis", "topics_cosine_excel2.tiff"),
+     width = 1600, height = 2000, pointsize = 200, compression = "lzw", res = 200,
+     type = "cairo")
+print(plot2)
 dev.off()
 
 pdf(file.path("analysis", "topics_cosine_excel3.pdf"), width = 8, height = 10)
 print(plot3)
 dev.off()
 
-tiff(file.path("analysis", "topics_cosine_excel3.tiff"), width = 550, height = 688)
-print(plot3, type = "cairo")
+tiff(file.path("analysis", "topics_cosine_excel3.tiff"),
+     width = 1600, height = 2000, pointsize = 200, compression = "lzw", res = 200,
+     type = "cairo")
+print(plot3)
 dev.off()
