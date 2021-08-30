@@ -1,5 +1,5 @@
 # „We’re rolling“
-### Our Uncertainty Perception Indicator (UPI) in Q4 2020: introducing RollingLDA, a New Method for the Measurement of Evolving Economic Narratives
+### Our Uncertainty Perception Indicator (UPI) in Q2 2021.
 The repository provides selected data and scripts related to the working papers
 
 * [Müller, H., Rieger. J. & Hornig, N. (2021).](http://dx.doi.org/10.17877/DE290R-22177) "Riders on the Storm". The Uncertainty Perception Indicator (UPI) in Q1 2021. *DoCMA Working Paper #7*.
