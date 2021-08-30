@@ -8,10 +8,10 @@ The repository provides selected data and scripts related to the working papers
 For bug reports, comments and questions please use the [issue tracker](https://github.com/JonasRieger/upi/issues).
 
 ## Related Software
-* [tmT](https://github.com/Docma-TU/tmT) to read the raw XML files of the articles and create the ``textmeta`` objects of the corpus.
-* [tosca](https://github.com/Docma-TU/tosca) to manage and manipulate the corpora to a structure requested by ``ldaPrototype`` and to plot the corpora.
+* [rollinglda](https://github.com/JonasRieger/rollinglda) to model the rolling version of LDA.
 * [ldaPrototype](https://github.com/JonasRieger/ldaPrototype) to determine a prototype from a number of runs of Latent Dirichlet Allocation.
-* [ldaGibbs](https://github.com/JonasRieger/ldaGibbs) to model Latent Dirichlet Allocations with a subset of articles assignments fixed.
+* [tosca](https://github.com/Docma-TU/tosca) to manage and manipulate the corpora to a structure requested by ``ldaPrototype`` and to plot the corpora.
+* [tmT](https://github.com/Docma-TU/tmT) to read the raw XML files of the articles and create the ``textmeta`` objects of the corpus.
 * [tm](https://CRAN.R-project.org/package=tm) to preprocess the text data.
 * [data.table](https://github.com/Rdatatable/data.table) to manage data tables.
 * [lubridate](https://lubridate.tidyverse.org/) to handle dates.
