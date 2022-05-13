@@ -1,0 +1,15 @@
+UPI:
+ - Datensatz aktualisieren per data_update
+	-> immer, wenn neue Welt Daten da sind - monatlich
+	-> 60 min, ca. 40 GB
+ - Datensätze cleanen per data_prep
+	-> sobald data_update fertig
+	-> 15 Std., ca. 50 GB
+ - UPI updaten per roll_update
+	-> check start and end date
+	-> sobald data_prep fertig
+	-> 5 min, ca. 16 GB
+ - Analyseskript
+	-> sobald roll_update fertig
+	-> 90 min, ca. 16 GB
+	

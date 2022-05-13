@@ -9,7 +9,7 @@ setwd(rootpath)
 objlist = list()
 files_welt = setdiff(list.files(recursive = TRUE, path = file.path("Welt", "data")),
                      readLines(file.path("Working_Paper_Uncertainty", "welt.txt")))
-files_sz = setdiff(list.files(path = file.path("Sueddeutsche", "ftp-SZ")),
+files_sz = setdiff(list.files(path = file.path("Sueddeutsche", "ftp-SZ"), recursive = TRUE),
                    readLines(file.path("Working_Paper_Uncertainty", "sz.txt")))
 files_hb = setdiff(list.files(path = file.path("HB_WiWo", "HB", "data")),
                    readLines(file.path("Working_Paper_Uncertainty", "hb.txt")))
@@ -18,17 +18,23 @@ if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
   setwd(file.path(rootpath, "Welt" ,"data"))
   obj = readNexis(file = files_welt, encoding = "UTF-8")
   obj = filterID(obj, obj$meta$id[obj$meta$resource %in% c("Die Welt", "DIE WELT")])
+  obj$text = obj$text[!duplicated(names(obj$text))]
+  obj$meta = obj$meta[match(names(obj$text), obj$meta$id),]
   objlist[[1]] = obj
   
   ## SZ
   setwd(file.path(rootpath, "Sueddeutsche", "ftp-SZ"))
   obj = readSZ(file = files_sz)
   obj$text = lapply(obj$text, function(x) paste(unlist(x), collapse = " "))
+  obj$text = obj$text[!duplicated(names(obj$text))]
+  obj$meta = obj$meta[match(names(obj$text), obj$meta$id),]
   objlist[[2]] = obj
   
   ## HB
   setwd(file.path(rootpath, "HB_WiWo", "HB", "data"))
   obj = readHBWiWo(file = files_hb)
+  obj$text = obj$text[!duplicated(names(obj$text))]
+  obj$meta = obj$meta[match(names(obj$text), obj$meta$id),]
   objlist[[3]] = obj
   
   ## merge Welt, SZ, HB
