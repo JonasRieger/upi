@@ -6,8 +6,8 @@ folder = readLines("folder.txt")
 
 #####
 # Only the following line have to be modified manually for updates.
-start_update = "2022-04-01"
-end_update = "2022-04-30"
+start_update = "2022-05-01"
+end_update = "2022-05-31"
 #####
 end_update = folder
 # overwrites the manually set date above; assumes monthly updates:
