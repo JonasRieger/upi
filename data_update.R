@@ -49,9 +49,12 @@ if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
   obj$text = removeUmlauts(obj$text)
   obj$text = removeXML(obj$text)
   obj$text = lapply(obj$text, function(x) gsub("&[^;]*;", " ", x))
-  obj$text = lapply(obj$text, function(x) gsub("\u00AD", "", x))
-  obj$text = lapply(obj$text, function(x) gsub("\u00A0", "", x))
-  
+  obj$text = lapply(obj$text, function(x) gsub("\u00AD", "", x)) #hier space einfuegen
+  obj$text = lapply(obj$text, function(x) gsub("\u00A0", "", x)) #hier space einfuegen
+
+  message(sum(duplicated(names(obj$text))), " duplicates deleted")
+  obj$text = obj$text[!duplicated(names(obj$text))]
+
   ## save new objects
   setwd(file.path(rootpath, "Working_Paper_Uncertainty"))
   writeLines(as.character(e.date), "folder.txt")
