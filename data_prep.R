@@ -2,6 +2,7 @@ starttime = Sys.time()
 
 library(tosca)
 library(data.table)
+library(lubridate)
 
 setwd(file.path("//media/TextMining/DoCMA/data", "Working_Paper_Uncertainty"))
 folder = readLines("folder.txt")
@@ -15,11 +16,17 @@ tablist = list()
 ## save clean, wl, docs and vocab
 for(type in c("_wirtschaft_unsicher", "_wirtschaft", "")){
   obj = readRDS(file.path("..", paste0("obj_updated", type, ".rds")))
-  obj = filterDate(obj, e.date = as.Date(folder))
+  obj$text = obj$text[!duplicated(names(obj$text))]
+  obj$meta = obj$meta[!duplicated(obj$meta$id),]
+  obj = filterDate(obj,
+                   s.date = as.Date(folder)+1 - months(1),
+                   e.date = as.Date(folder))
   obj = cleanTexts(obj, sw = sw)
+  saveRDS(obj, paste0("clean_new", type, ".rds"))
+  obj = mergeTextmeta(list(
+    readRDS(file.path("..", paste0("clean_updated", type, ".rds"))),
+    obj))
   saveRDS(obj, file.path("..", paste0("clean_updated", type, ".rds")))
-  
-  obj = filterDate(obj, s.date = as.Date("2001-01-01"))
   
   tab = cbind(plotScot(obj, type = "docs"), type = "docs")
   colnames(tab) = c("date", paste0("n", type), "type")
