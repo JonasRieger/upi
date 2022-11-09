@@ -1,3 +1,6 @@
+just run upi_update (resources: ~120min., 64GB)
+
+##deprecated:
 UPI:
  - Datensatz aktualisieren per data_update
 	-> immer, wenn neue Welt Daten da sind - monatlich
