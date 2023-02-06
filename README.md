@@ -7,7 +7,8 @@ The repository provides selected data and scripts related to the working papers
 * [Müller, H., Rieger. J. & Hornig, N. (2021).](http://dx.doi.org/10.17877/DE290R-22177) "Riders on the Storm". The Uncertainty Perception Indicator (UPI) in Q1 2021. *DoCMA Working Paper #7*.
 * [Müller, H., Rieger. J. & Hornig, N. (2021).](http://dx.doi.org/10.17877/DE290R-21974) "We’re rolling". Our Uncertainty Perception Indicator (UPI) in Q4 2020: introducing RollingLDA, a new Method for the Measurement of Evolving Economic Narratives. *DoCMA Working Paper #6*.
 
-If you're using data from this repository or want to cite the methodology of the UPI, please cite our paper
+## Citation
+If you're using data from this repository or want to refer to the methodology of the UPI, please cite our paper
 * [Rieger, J., Hornig, N., Schmidt, T. and Müller, H. (2023).](https://github.com/JonasRieger/mufin23/blob/master/paper.pdf) Early Warning Systems? Building Time Consistent Perception Indicators for Economic Uncertainty and Inflation Using Efficient Dynamic Modeling. Accepted for [MUFin’23](https://sites.google.com/view/w-mufin).
 
 For bug reports, comments and questions please use the [issue tracker](https://github.com/JonasRieger/upi/issues).
