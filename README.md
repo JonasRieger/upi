@@ -27,6 +27,4 @@ For bug reports, comments and questions please use the [issue tracker](https://g
 * [GGally](https://github.com/ggobi/ggally) to visualize some statistics.
 
 ## Usage
-Please note: For legal reasons the repository cannot provide all data. Please [let us know](https://github.com/JonasRieger/upi/issues) if you feel that there is anything missing that we could add. 
-
-The scripts ``data_init.R``, ``data_update.R`` and ``data_prep.R`` show the workflow of corpus creation and preprocessing, while ``fwrite.R`` shows how to create a CSV file from a ``textmeta`` object. The script ``lda.R`` contains the code for modeling the *RollingLDA* and ``analysis.R`` for analyzing it.
+Please note: For legal reasons the repository cannot provide all data. Please [let us know](https://github.com/JonasRieger/upi/issues) if you feel that there is anything missing that we could add.
