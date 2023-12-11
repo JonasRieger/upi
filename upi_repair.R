@@ -13,100 +13,6 @@ library(ggthemes)
 rootpath = "//media/TextMining/DoCMA/data"
 setwd(rootpath)
 
-starttime = Sys.time()
-
-objlist = list()
-files_welt = setdiff(list.files(recursive = TRUE, path = file.path("Welt", "data")),
-                     readLines(file.path("Working_Paper_Uncertainty", "welt.txt")))
-files_sz = setdiff(list.files(path = file.path("Sueddeutsche", "ftp-SZ"), recursive = TRUE),
-                   readLines(file.path("Working_Paper_Uncertainty", "sz.txt")))
-files_hb = setdiff(list.files(path = file.path("HB_WiWo", "HB", "data")),
-                   readLines(file.path("Working_Paper_Uncertainty", "hb.txt")))
-if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
-  ## Welt
-  setwd(file.path(rootpath, "Welt" ,"data"))
-  obj = readNexis(file = files_welt, encoding = "UTF-8")
-  obj = filterID(obj, obj$meta$id[obj$meta$resource %in% c("Die Welt", "DIE WELT")])
-  obj$text = obj$text[!duplicated(names(obj$text))]
-  obj$meta = obj$meta[match(names(obj$text), obj$meta$id),]
-  objlist[[1]] = obj
-  
-  ## SZ
-  setwd(file.path(rootpath, "Sueddeutsche", "ftp-SZ"))
-  obj = readSZ(file = files_sz)
-  obj$text = lapply(obj$text, function(x) paste(unlist(x), collapse = " "))
-  obj$text = obj$text[!duplicated(names(obj$text))]
-  obj$meta = obj$meta[match(names(obj$text), obj$meta$id),]
-  objlist[[2]] = obj
-  
-  ## HB
-  setwd(file.path(rootpath, "HB_WiWo", "HB", "data"))
-  obj = readHBWiWo(file = files_hb)
-  obj$text = obj$text[!duplicated(names(obj$text))]
-  obj$meta = obj$meta[match(names(obj$text), obj$meta$id),]
-  objlist[[3]] = obj
-  
-  ## merge Welt, SZ, HB
-  e.date = min(do.call("c", lapply(objlist, function(x) max(x$meta$date, na.rm = TRUE))))
-  if (e.date != ceiling_date(e.date, "month")-1){
-    message("rounding e.date (actually ", e.date, ") to last day of month: ", 
-            ceiling_date(e.date, "month")-1)
-    e.date = ceiling_date(e.date, "month")-1
-  }
-  writeLines(as.character(as.Date(readLines("folder.txt"))+1), "sdate.txt")
-  
-  obj = mergeTextmeta(objlist)
-  rm(objlist)
-  gc()
-  
-  obj$text = removeUmlauts(obj$text)
-  obj$text = removeHTML(obj$text, hex = FALSE, symbols = TRUE)
-  obj$text = removeUmlauts(obj$text)
-  obj$text = removeXML(obj$text)
-  obj$text = lapply(obj$text, function(x) gsub("&[^;]*;", " ", x))
-  obj$text = lapply(obj$text, function(x) gsub("\u00AD", "", x)) #hier space einfuegen
-  obj$text = lapply(obj$text, function(x) gsub("\u00A0", "", x)) #hier space einfuegen
-  
-  message(sum(duplicated(names(obj$text))), " duplicates deleted")
-  obj$text = obj$text[!duplicated(names(obj$text))]
-  
-  ## save new objects
-  setwd(file.path(rootpath, "Working_Paper_Uncertainty"))
-  
-  writeLines(as.character(e.date), "folder.txt")
-  dir.create(as.character(e.date))
-  setwd(as.character(e.date))
-  
-  saveRDS(obj, "obj_new.rds")
-  id = names(which(filterWord(obj$text, "wirtschaft", ignore.case = TRUE, out = "bin")))
-  obj2 = filterID(obj, id)
-  saveRDS(obj2, "obj_new_wirtschaft.rds")
-  id = names(which(filterWord(obj2$text, "unsicher", ignore.case = TRUE, out = "bin")))
-  obj3 = filterID(obj2, id)
-  saveRDS(obj3, "obj_new_wirtschaft_unsicher.rds")
-  
-  ## merge with older objects and save
-  setwd(file.path(rootpath, "Working_Paper_Uncertainty"))
-  writeLines(c(readLines("welt.txt"), files_welt), "welt.txt")
-  writeLines(c(readLines("sz.txt"), files_sz), "sz.txt")
-  writeLines(c(readLines("hb.txt"), files_hb), "hb.txt")
-  obj = mergeTextmeta(list(readRDS("obj_updated.rds"), obj))
-  saveRDS(obj, "obj_updated.rds")
-  rm(obj)
-  gc()
-  obj2 = mergeTextmeta(list(readRDS("obj_updated_wirtschaft.rds"), obj2))
-  saveRDS(obj2, "obj_updated_wirtschaft.rds")
-  rm(obj2)
-  gc()
-  obj3 = mergeTextmeta(list(readRDS("obj_updated_wirtschaft_unsicher.rds"), obj3))
-  saveRDS(obj3, "obj_updated_wirtschaft_unsicher.rds")
-  rm(obj3)
-  gc()
-  
-  difftime(Sys.time(), starttime, units = "hours")
-  
-  rm(list = ls())
-  gc()
   ####### data_prep:
   message("#########\ndata_prep\n#########")
   starttime = Sys.time()
@@ -156,10 +62,10 @@ if(length(files_welt) > 1 && length(files_sz) > 1 && length(files_hb) > 1){
   gc()
   
   difftime(Sys.time(), starttime, units = "hours")
-
+  
   rm(list = ls())
   gc()
-setwd("..")
+  setwd("..")
   ####### roll_update:
   message("#########\nroll_update\n#########")
   
@@ -187,7 +93,7 @@ setwd("..")
   
   rm(list = ls())
   gc()
-setwd("..")
+  setwd("..")
   ####### analysis:
   message("#########\nanalysis\n#########")
   
