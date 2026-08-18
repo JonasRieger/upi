@@ -4,7 +4,7 @@
 The repository provides selected data and scripts related to the following papers.
 
 If you're using data from this repository or want to refer to the general methodology of the UPI, please cite our paper
-* [Rieger, J., Hornig, N., Schmidt, T. and Müller, H. (2023).](https://github.com/JonasRieger/mufin23/blob/master/paper.pdf) Early Warning Systems? Building Time Consistent Perception Indicators for Economic Uncertainty and Inflation Using Efficient Dynamic Modeling. Accepted for [MUFin’23](https://sites.google.com/view/w-mufin).
+* [Rieger, J., Hornig, N., Schmidt, T. and Müller, H. (2023).](https://github.com/JonasRieger/mufin23/blob/master/paper.pdf) Early Warning Systems? Building Time Consistent Perception Indicators for Economic Uncertainty and Inflation Using Efficient Dynamic Modeling. Proceedings of the 3rd Workshop on Modelling Uncertainty in the Financial World ([MUFin’23](https://sites.google.com/view/w-mufin)). [GitHub](https://github.com/JonasRieger/mufin23).
 
 Instead, if you wish to refer to a particular interpretation, please cite the follwowing paper
 
