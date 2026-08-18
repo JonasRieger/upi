@@ -1,5 +1,5 @@
 # UPI - Uncertainty Perception Indicator
-see also [IPI](https://github.com/JonasRieger/ipi/).
+see also [IPI](https://github.com/JonasRieger/ipi/)
 
 ## Citation & References
 
