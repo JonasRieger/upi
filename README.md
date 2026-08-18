@@ -1,4 +1,6 @@
 # UPI - Uncertainty Perception Indicator
+see also [IPI](https://github.com/JonasRieger/ipi/).
+
 ## Citation & References
 
 The repository provides selected data and scripts related to the following papers.
