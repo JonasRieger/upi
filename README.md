@@ -16,6 +16,11 @@ or the corresponding working paper
 * [Müller, H., Rieger. J. & Hornig, N. (2021).](http://dx.doi.org/10.17877/DE290R-22177) "Riders on the Storm". The Uncertainty Perception Indicator (UPI) in Q1 2021. *DoCMA Working Paper #7*.
 * [Müller, H., Rieger. J. & Hornig, N. (2021).](http://dx.doi.org/10.17877/DE290R-21974) "We’re rolling". Our Uncertainty Perception Indicator (UPI) in Q4 2020: introducing RollingLDA, a new Method for the Measurement of Evolving Economic Narratives. *DoCMA Working Paper #6*.
 
+## Parameters
+* 14 topics modeled with ``alpha=eta=1/14``
+* monthly updates with three quarters memory
+* words are taken into account as soon as they pass a threshold of five appearances in an update month
+
 ## Related Software
 * [rollinglda](https://github.com/JonasRieger/rollinglda) to model the rolling version of LDA.
 * [ldaPrototype](https://github.com/JonasRieger/ldaPrototype) to determine a prototype from a number of runs of Latent Dirichlet Allocation.
