@@ -20,6 +20,7 @@ or the corresponding working paper
 * 14 topics modeled with ``alpha=eta=1/14``
 * monthly updates with three quarters memory
 * words are taken into account as soon as they pass a threshold of five appearances in an update month
+* for more details, please refer to the given scripts
 
 ## Related Software
 * [rollinglda](https://github.com/JonasRieger/rollinglda) to model the rolling version of LDA.
